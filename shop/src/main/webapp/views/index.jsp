@@ -25,7 +25,9 @@
     <script src="https://code.highcharts.com/modules/non-cartesian-zoom.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
 
-
+    <%-- Web Socket Lib --%>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
 </head>
 <body>
@@ -80,7 +82,9 @@
                 <a class="nav-link" href="<c:url value="/chart"/>">Chart</a>
             </li>
             <c:if test="${sessionScope.cust.custId != null}">
-
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/chat"/>">Chat</a>
+                </li>
             </c:if>
         </ul>
     </div>
