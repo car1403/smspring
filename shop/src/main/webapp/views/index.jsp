@@ -79,6 +79,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/chart"/>">Chart</a>
             </li>
+            <c:if test="${sessionScope.cust.custId != null}">
+
+            </c:if>
         </ul>
     </div>
 </nav>

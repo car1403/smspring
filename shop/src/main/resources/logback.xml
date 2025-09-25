@@ -72,7 +72,7 @@
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </logger>
-    <logger name="edu.sm.controller.MainRestController" level="INFO">
+    <logger name="edu.sm.app.service.LoggerService1" level="INFO">
         <appender-ref ref="FILE2" />
     </logger>
     <logger name="edu.sm.controller.LoginController" level="INFO">

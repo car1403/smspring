@@ -17,6 +17,8 @@ public class MainController {
 
     @Value("${app.url.sse}")
     String sseUrl;
+    @Value("${app.url.mainsse}")
+    String mainsseUrl;
 
     @RequestMapping("/")
     public String main(Model model) {
@@ -26,6 +28,7 @@ public class MainController {
 
     @RequestMapping("/chart")
     public String chart(Model model) {
+        model.addAttribute("mainsseUrl",mainsseUrl);
         model.addAttribute("center","chart");
         return "index";
     }
