@@ -71,16 +71,18 @@
       }]
     },
     init:async function(){
+
+      $('#startButton').click(()=>{
+        this.startCall();
+      });
+      $('#endButton').click(()=>{
+        this.endCall();
+      });
+
+    },
+    connect:function (){
       try {
         this.websocket = new WebSocket('${websocketurl}signal');
-
-        $('#startButton').click(()=>{
-          this.startCall();
-        });
-        $('#endButton').click(()=>{
-          this.endCall();
-        });
-
         this.websocket.onopen = () => {
           console.log('WebSocket connected');
           this.updateConnectionStatus('WebSocket Connected');
@@ -90,26 +92,29 @@
           });
 
         };
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          },
-          audio: true
-        });
-
-        this.localStream = stream;
-        document.getElementById('localVideo').srcObject = stream;
-        document.getElementById('startButton').disabled = false;
-
         this.setupWebSocketHandlers();
       } catch (error) {
         console.error('Error initializing WebRTC:', error);
         this.updateConnectionStatus('Error: ' + error.message);
       }
+    },
+    startCam:async function(){
 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: true
+      });
+
+      this.localStream = stream;
+      document.getElementById('localVideo').srcObject = stream;
+      document.getElementById('startButton').disabled = false;
     },
     startCall:async function(){
+      await this.startCam();
+      await this.connect();
       try {
         if (!this.peerConnection) {
           await this.createPeerConnection();
@@ -130,7 +135,7 @@
         console.error('Error starting call:', error);
         this.updateConnectionStatus('Error starting call');
       }
-
+      console.log("startCall-----------------------------------------------");
     },
     endCall:function(){
       if (this.localStream) {
@@ -144,6 +149,8 @@
       document.getElementById('startButton').style.display = 'block';
       document.getElementById('endButton').style.display = 'none';
       this.updateConnectionStatus('Call Ended');
+      this.websocket.close()
+      console.log("endCall-----------------------------------------------");
 
     },
     sendSignalingMessage:function(message){
@@ -164,7 +171,7 @@
                   await this.createPeerConnection();
                 }
 
-                await this.peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+                await this.peerConnection.setRemoteDescription(new RTCSessionDescription(message.data));
                 const answer = await this.peerConnection.createAnswer();
                 await this.peerConnection.setLocalDescription(answer);
 
@@ -175,12 +182,13 @@
                 });
               } catch (error) {
                 console.error('Error handling offer:', error);
-              }              break;
+              }
+              break;
             case 'answer':
-              await this.peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+              await this.peerConnection.setRemoteDescription(new RTCSessionDescription(message.data));
               break;
             case 'ice-candidate':
-              await this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+              await this.peerConnection.addIceCandidate(new RTCIceCandidate(message.data));
               break;
           }
         } catch (error) {
@@ -189,6 +197,8 @@
       };
 
       this.websocket.onclose = () => {
+        console.log('WebSocket Disconnected');
+
         this.updateConnectionStatus('WebSocket Disconnected');
       };
 
@@ -243,15 +253,17 @@
 
 <div class="col-sm-10">
   <h2>Chat3 Center</h2>
-
+<%--  <div class="controls">--%>
+<%--    <button id="startVideoButton" class="control-button start-call">Start Video Button</button>--%>
+<%--  </div>--%>
   <div class="admin-webrtc-container">
     <div class="video-grid">
       <div class="video-wrapper">
-        <video id="localVideo" autoplay playsinline muted class="video-stream"></video>
+        <video id="remoteVideo" autoplay playsinline muted class="video-stream"></video>
         <div class="video-label">Admin Stream</div>
       </div>
       <div class="video-wrapper">
-        <video id="remoteVideo" autoplay playsinline class="video-stream"></video>
+        <video id="localVideo" autoplay playsinline class="video-stream"></video>
         <div class="video-label">User Stream</div>
       </div>
     </div>
