@@ -40,5 +40,11 @@ public class MainController {
         model.addAttribute("center","chat");
         return "index";
     }
+    @RequestMapping("/websocket")
+    public String websocket(Model model) {
+        model.addAttribute("websocketurl",wsUrl);
+        model.addAttribute("center","websocket");
+        return "index";
+    }
 
 }
