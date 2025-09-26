@@ -12,7 +12,7 @@
   chat2 = {
     id:'',
     init:function(){
-      this.id = $('#user_id').val();
+      this.id = '${sessionScope.cust.custId}';
       this.connect();
       $('#sendto').click(()=>{
         var msg = JSON.stringify({
