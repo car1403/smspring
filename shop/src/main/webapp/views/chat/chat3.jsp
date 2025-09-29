@@ -78,7 +78,8 @@
       $('#endButton').click(()=>{
         this.endCall();
       });
-
+      await this.startCam();
+      await this.connect();
     },
     connect:function (){
       try {
@@ -113,8 +114,7 @@
       document.getElementById('startButton').disabled = false;
     },
     startCall:async function(){
-      await this.startCam();
-      await this.connect();
+
       try {
         if (!this.peerConnection) {
           await this.createPeerConnection();
