@@ -19,8 +19,8 @@ public class MainController {
     String sseUrl;
     @Value("${app.url.mainsse}")
     String mainsseUrl;
-    @Value("${app.url.wsurl}")
-    String wsUrl;
+    @Value("${app.url.websocketurl}")
+    String websocketurl;
 
     @RequestMapping("/")
     public String main(Model model) {
@@ -36,13 +36,13 @@ public class MainController {
     }
     @RequestMapping("/chat")
     public String chat(Model model) {
-        model.addAttribute("websocketurl",wsUrl);
+        model.addAttribute("websocketurl",websocketurl);
         model.addAttribute("center","chat");
         return "index";
     }
     @RequestMapping("/websocket")
     public String websocket(Model model) {
-        model.addAttribute("websocketurl",wsUrl);
+        model.addAttribute("websocketurl",websocketurl);
         model.addAttribute("center","websocket");
         return "index";
     }

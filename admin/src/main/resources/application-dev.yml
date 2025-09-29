@@ -13,9 +13,12 @@ spring:
       suffix: .jsp
   datasource:
     #url: jdbc:mysql://127.0.0.1:3306/shopdb?serverTimezone=Asia/Seoul
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8
-    username: smuser
+#    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8
+#    username: smuser
+#    password: ENC(idIWCdznEM3ggslDeTmLJw==)
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
     password: ENC(idIWCdznEM3ggslDeTmLJw==)
 
 mybatis:
@@ -34,7 +37,7 @@ app:
   url:
     sse: http://127.0.0.1:8088/
     mainsse: https://127.0.0.1:8443/
-    wsurl: https://127.0.0.1:8443/
+    websocketurl: https://127.0.0.1:8443/
   dir:
     imgsdir: file:///C:/smspring/imgs/     # 화면 출력 용
     uploadimgsdir: C:/smspring/imgs/    # 파일 Write 용
