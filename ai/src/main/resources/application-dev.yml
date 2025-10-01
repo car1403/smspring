@@ -26,6 +26,14 @@ spring:
           model: gpt-4o
           temperature: 0.1
           max-tokens: 1000
+#      api-key: ENC(H2lYOh7lv2ptvQl2HOqwv8hwumZFoPhhyIYLhhakscQNicH35vGSOGaTzid1XxJx)
+#      chat:
+#        options:
+#          model: gemini-2.0-flash
+#          temperature: 0.0
+#          max-tokens: 1000
+#        completions-path: /v1/chat/completions
+#        base-url: https://generativelanguage.googleapis.com/v1beta/openai/
 mybatis:
   type-aliases-package: edu.sm.app.dto
   mapper-locations: classpath:/mapper/*.xml
@@ -41,7 +49,4 @@ logging:
 app:
   key:
     skey: ${MY_KEY}
-#    chatgpt: ENC(zN8LCgmXLVIud/L3pNDAt8P9sP15oU09/cd/ila+ouA+O4Z0L8CsrurxI+DqlsaOyf1kIyZa6Tpp/nC+mkPGc6EcViQHnTTdXAhVq9aNPuvgRil0Ck7owB83oQoCnKdTT08eINqY1Bq25pWoaSLonpx1WHpJubw0bxRsR4ufOEwt+sg2NvoLWMHwf1y6tp+h9cDAewZWMioZ54QxPwq2jyWOOlXo3bKPPi2CZdMJBtM=)
-#    gemini: ENC(H2lYOh7lv2ptvQl2HOqwv8hwumZFoPhhyIYLhhakscQNicH35vGSOGaTzid1XxJx)
-
 
