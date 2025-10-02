@@ -80,6 +80,7 @@
       });
       await this.startCam();
       await this.connect();
+      document.getElementById('adminArea').style.display = 'none';
     },
     connect:function (){
       try {
@@ -138,6 +139,8 @@
 
         document.getElementById('startButton').style.display = 'none';
         document.getElementById('endButton').style.display = 'block';
+        document.getElementById('adminArea').style.display = 'block';
+
       } catch (error) {
         console.error('Error starting call:', error);
         this.updateConnectionStatus('Error starting call');
@@ -154,6 +157,8 @@
         this.peerConnection = null;
       }
       document.getElementById('remoteVideo').srcObject = null;
+      document.getElementById('adminArea').style.display = 'none';
+
       document.getElementById('startButton').style.display = 'block';
       document.getElementById('endButton').style.display = 'none';
       this.updateConnectionStatus('Call Ended');
@@ -198,10 +203,14 @@
               break;
             case 'join':
               $('#user').html("사용자가 방문 하였습니다.  Start Call 버튼을 누르세요");
+              document.getElementById('adminArea').style.display = 'block';
+
               break;
             case 'bye':
               $('#user').html("접속이 끊어 졌습니다.");
               document.getElementById('remoteVideo').srcObject = null;
+              document.getElementById('adminArea').style.display = 'none';
+
               break;
             case 'answer':
               await this.peerConnection.setRemoteDescription(new RTCSessionDescription(message.data));
@@ -239,6 +248,8 @@
       });
 
       this.peerConnection.ontrack = (event) => {
+        console.log('Event Size ==========================> '+event.streams.length);
+
         if (document.getElementById('remoteVideo') && event.streams[0]) {
           document.getElementById('remoteVideo').srcObject = event.streams[0];
         }
@@ -289,11 +300,11 @@
 <%--  </div>--%>
   <div class="admin-webrtc-container">
     <div class="video-grid">
-      <div class="video-wrapper">
+      <div class="video-wrapper" id="adminArea" style="display: none">
         <video id="remoteVideo" autoplay playsinline muted class="video-stream"></video>
         <div class="video-label">Admin Stream</div>
       </div>
-      <div class="video-wrapper">
+      <div class="video-wrapper" id="localArea">
         <video id="localVideo" autoplay playsinline class="video-stream"></video>
         <div class="video-label">User Stream</div>
       </div>
