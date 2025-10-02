@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String url = "https://127.0.0.1:8443/savedata";
+        String url = "https://192.168.0.250:8443/savedata";
         Random r = new Random();
         for(int i=0;i<1000;i++){
             int num = r.nextInt(100)+1;
