@@ -54,6 +54,12 @@ public class SpringAI3Controller {
         model.addAttribute("left", dir+"left");
         return "index";
     }
+    @RequestMapping("/ai7")
+    public String ai7(Model model) {
+        model.addAttribute("center", dir+"ai7");
+        model.addAttribute("left", dir+"left");
+        return "index";
+    }
 
 }
 
