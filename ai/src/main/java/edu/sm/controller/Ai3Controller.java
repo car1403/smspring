@@ -32,25 +32,34 @@ public class Ai3Controller {
     String text = aisttService.stt(speech);
     return text;
   }
-  @RequestMapping(value = "/target")
-  public String target(@RequestParam("questionText")  String questionText) throws IOException {
+  @RequestMapping(value = "/stt2")
+  public String stt2(@RequestParam("speech") MultipartFile speech) throws IOException {
+    String text = aisttService.stt(speech);
     Map<String, String> views = new ConcurrentHashMap<>();
-    log.info("|"+questionText+"|");
+    log.info("|"+text+"|");
 
     views.put("로그인", "/login");
-    views.put("상품", "/items");
+    views.put("회원가입", "/register");
+    views.put("회원 가입", "/register");
+    views.put("홈", "/");
 
-    String result = views.get(questionText.trim());
-    log.info(result);
-
+    String result = views.get(text.trim());
     return result;
   }
+
 
   @RequestMapping(value = "/tts")
   public byte[] tts(@RequestParam("text") String text) {
     byte[] bytes = aisttService.tts(text);
     return bytes;
   }
+
+  @RequestMapping(value = "/tts2")
+  public Map<String, String> tts2(@RequestParam("text") String text) {
+    Map<String, String> response = aisttService.tts2(text);
+    return response;
+  }
+
 
   @RequestMapping(value = "/chat-text")
   public Map<String, String> chatText(@RequestParam("question") String question) {
@@ -77,6 +86,7 @@ public class Ai3Controller {
   public Map<String,String> imageAnalysis2(
           @RequestParam("question") String question,
           @RequestParam(value="attach", required = false) MultipartFile attach) throws IOException {
+
     String result = aiImageService.imageAnalysis2(question, attach.getContentType(), attach.getBytes());
     byte[] audio = aisttService.tts(result);
     String base64Audio = Base64.getEncoder().encodeToString(audio);

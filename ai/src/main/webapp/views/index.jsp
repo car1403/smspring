@@ -22,8 +22,68 @@
             background: #aaa;
         }
     </style>
+
+
+
+    <script>
+        let index = {
+            init:function(){
+                this.startQuestion();
+                this.startVoice();
+            },
+            startVoice: async function(){
+                const audioPlayer = document.getElementById("mainAudioPlayer");
+                await audioPlayer.play();
+            },
+            startQuestion:function(){
+                springai.voice.initMic(this);
+                $('#mainSpinner').css('visibility','hidden');
+            },
+            handleVoice: async function(mp3Blob){
+
+                //스피너 보여주기
+                $('#mainSpinner').css('visibility','visible');
+
+                // 멀티파트 폼 구성
+                const formData = new FormData();
+                formData.append("speech", mp3Blob, 'speech.mp3');
+
+                // 녹화된 음성을 텍스트로 변환 요청
+                const response = await fetch("/ai3/stt2", {
+                    method: "post",
+                    headers: {
+                        'Accept': 'text/plain'
+                    },
+                    body: formData
+                });
+
+                // 텍스트 질문을 채팅 패널에 보여주기
+                const target = await response.text();
+                console.log('Handle:'+target);
+                location.href=target;
+
+                //
+                // $.ajax({
+                //     url:'/ai3/target',
+                //     data:{'questionText':questionText},
+                //     success:(target)=>{
+                //         location.href=target;
+                //     }
+                // });
+            }
+        }
+
+        $((()=>{
+            index.init();
+        }));
+
+    </script>
+
+
+
 </head>
 <body>
+<audio id="mainAudioPlayer" src="<c:url value="/mp3/start.mp3"/>" controls style="display:none;"></audio>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <h1>SpringAI System</h1>
@@ -35,6 +95,12 @@
     <li class="nav-item">
         <a class="nav-link" href="#">REGISTER</a>
     </li>
+    <li class="nav-item">
+        <button class="btn btn-primary" disabled >
+            <span class="spinner-border spinner-border-sm" id="mainSpinner"></span>
+        </button>
+    </li>
+
 </ul>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="<c:url value="/"/>">Home</a>

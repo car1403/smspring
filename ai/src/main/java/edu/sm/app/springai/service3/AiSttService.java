@@ -83,9 +83,30 @@ public class AiSttService {
     byte[] bytes = response.getResult().getOutput();
 
     return bytes;
-  }  
-  
+  }
 
+  public Map<String, String> tts2(String text) {
+    // 모델 옵션 설정
+    OpenAiAudioSpeechOptions options = OpenAiAudioSpeechOptions.builder()
+            .model("gpt-4o-mini-tts")
+            .voice(SpeechRequest.Voice.ALLOY)
+            .responseFormat(AudioResponseFormat.MP3)
+            .speed(1.0f)
+            .build();
+
+    // 프롬프트 생성
+    SpeechPrompt prompt = new SpeechPrompt(text, options);
+
+    // 모델을 호출하고 응답받기
+    SpeechResponse response = openAiAudioSpeechModel.call(prompt);
+    byte[] bytes = response.getResult().getOutput();
+    String base64Audio = Base64.getEncoder().encodeToString(bytes);
+
+    Map<String, String> result = new HashMap<>();
+    result.put("audio", base64Audio);
+
+    return result;
+  }
 
   public Map<String, String> chatText(String question) {
     // LLM로 요청하고, 텍스트 응답 얻기

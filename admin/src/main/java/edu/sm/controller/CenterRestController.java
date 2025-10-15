@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
@@ -37,5 +38,14 @@ public class CenterRestController {
         }
         return ja;
     }
-
+    @RequestMapping("/piechart2")
+    public Object piechart2(@RequestParam("question") String question) throws Exception {
+        log.info(question);
+        JSONArray ja = new JSONArray();
+        Random r = new Random();
+        for(int i=0; i<3; i++){
+            ja.add(r.nextInt(30)+1);
+        }
+        return ja;
+    }
 }
