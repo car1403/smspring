@@ -20,9 +20,12 @@
                 console.log('connect event data: ',receivedConnectData);  // "connected!"
             });
             sse.addEventListener('msg', e => {
-                const { data: receivedMsg } = e;
-                console.log("count :",receivedMsg);
-                $('#msg').html(receivedMsg);
+                const { data: data } = e;
+                console.log("msg :",data);
+                const base64Src = "data:image/png;base64," + data;
+
+                const generatedImage = document.getElementById("generatedImage");
+                generatedImage.src = base64Src;
             });
             sse.addEventListener('count', e => {
                 const { data: receivedCount } = e;
@@ -67,6 +70,8 @@
     </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h5 class="h5 mb-0 text-gray-800" id="msg"></h5>
+        <img id="generatedImage" src="/img/assistant.png" width="100px;" class="img-fluid" alt="Generated Image" />
+
     </div>
 
     <!-- Content Row -->
