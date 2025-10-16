@@ -41,6 +41,7 @@ public class SseController {
     @RequestMapping("/aimsg")
     public void msg(@RequestParam("msg") String msg){
         log.info("msg:"+msg);
+        sseEmitters.msg(msg);
     }
 
 
