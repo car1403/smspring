@@ -1,6 +1,7 @@
 package edu.sm.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +13,12 @@ public class SpringAI3Controller {
 
     String dir = "springai3/";
 
+    @Value("${app.url.adminserver}")
+    String adminServer;
+
     @RequestMapping("")
     public String main(Model model) {
+        model.addAttribute("adminserver", adminServer);
         model.addAttribute("center", dir+"center");
         model.addAttribute("left", dir+"left");
         return "index";

@@ -1,5 +1,10 @@
 server:
-  port: 80
+  port: 8445
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-password: ENC(idIWCdznEM3ggslDeTmLJw==)
+    key-store-type: PKCS12
   servlet:
     encoding:
       charset: UTF-8
@@ -47,6 +52,8 @@ logging:
 # Application Config
 # @Value("${}")
 app:
+  url:
+    adminserver: https://192.168.0.250:8444/
   key:
     skey: ${MY_KEY}
 

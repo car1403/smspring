@@ -36,4 +36,18 @@ public class SseController {
         sseEmitters.count(num);
         //return ResponseEntity.ok().build();
     }
+
+
+    @RequestMapping("/aimsg")
+    public void msg(@RequestParam("msg") String msg){
+        log.info("msg:"+msg);
+    }
+
+
 }
+
+
+
+
+
+

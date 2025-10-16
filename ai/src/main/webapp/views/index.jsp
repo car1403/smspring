@@ -28,8 +28,8 @@
     <script>
         let index = {
             init:function(){
-                this.startQuestion();
-                this.startVoice();
+                //this.startQuestion();
+                //this.startVoice();
             },
             startVoice: async function(){
                 const audioPlayer = document.getElementById("mainAudioPlayer");

@@ -42,6 +42,7 @@ public class Ai3Controller {
     views.put("회원가입", "/register");
     views.put("회원 가입", "/register");
     views.put("홈", "/");
+    views.put("메인", "/");
 
     String result = views.get(text.trim());
     return result;
