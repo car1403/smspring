@@ -19,11 +19,14 @@
                 const { data: receivedConnectData } = e;
                 console.log('connect event data: ',receivedConnectData);  // "connected!"
             });
-            sse.addEventListener('msg', e => {
+            sse.addEventListener('aimsg', e => {
                 const { data: data } = e;
                 console.log("msg :",data);
-                const base64Src = "data:image/png;base64," + data;
 
+                const result = JSON.parse(data).result;
+                $('aimsg').html(result.trim());
+
+                const base64Src = "data:image/png;base64," + JSON.parse(data).base64File;
                 const generatedImage = document.getElementById("generatedImage");
                 generatedImage.src = base64Src;
             });
@@ -69,9 +72,9 @@
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h5 class="h5 mb-0 text-gray-800" id="msg"></h5>
-        <img id="generatedImage" src="/img/assistant.png" width="100px;" class="img-fluid" alt="Generated Image" />
-
+        <h5 class="h5 mb-0 text-gray-800" id="aimsg"></h5>
+        <img id="generatedImage" src="/img/assistant.png"
+             width="100px;" class="img-fluid" alt="Generated Image" />
     </div>
 
     <!-- Content Row -->

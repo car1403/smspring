@@ -26,9 +26,12 @@
     },
     captureFrame:function(videoId, handleFrame){
       const video = document.getElementById(videoId);
+      $('#capture').empty();
 
       //캔버스를 생성해서 비디오 크기와 동일하게 맞춤
       const canvas = document.createElement('canvas');
+      $('#capture').append(canvas);
+
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
@@ -88,7 +91,13 @@
         </div>
       </div>
       <div class="container p-3 my-3 border" style="overflow: auto;width:auto;height: 300px;">
-        <video id="video" src="" alt="" height="200" autoplay />
+        <div class="row">
+          <div class="col-sm-6">
+            <video id="video" src="" alt="" height="200" autoplay />
+          </div>
+          <div class="col-sm-6" id="capture">
+          </div>
+        </div>
       </div>
     </div>
 
