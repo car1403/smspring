@@ -24,7 +24,7 @@
                 console.log("msg :",data);
 
                 const result = JSON.parse(data).result;
-                $('aimsg').html(result.trim());
+                $('#aimsg').html(result.trim());
 
                 const base64Src = "data:image/png;base64," + JSON.parse(data).base64File;
                 const generatedImage = document.getElementById("generatedImage");
